@@ -1,1 +1,2 @@
 blynk-library-python
+pyyaml
