@@ -29,7 +29,6 @@ else:
 blynk = bl.Blynk(
     auth=blynk_config['BLYNK_AUTH_TOKEN'],
     tmpl_id=blynk_config['BLYNK_TEMPLATE_ID'],
-    log=print,
 )
 
 # Create BlynkTimer Instance
@@ -64,6 +63,7 @@ def blynk_set_temperature_value():
     temperature_value = read_temperature()
     blynk.virtual_write(BLYNK_PINS['temperature'], temperature_value)
     blynk.virtual_write(BLYNK_PINS['time'], f"{update_time}")
+    print(f"Temperature Update: {temperature_value} ºF ({update_time})")
 
 
 # Add Timers
