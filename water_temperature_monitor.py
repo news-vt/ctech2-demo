@@ -36,9 +36,10 @@ timer = bt.BlynkTimer()
 
 # Dictionary of Blynk virtual pin numbers.
 BLYNK_PINS = {
-    'state': 0,
-    'temperature': 1,
-    'time': 2,
+    'led_green': 0,
+    'led_red': 1,
+    'temperature': 2,
+    'time': 3,
 }
 
 
@@ -46,13 +47,23 @@ BLYNK_PINS = {
 def blynk_connected(ping: float):
     """Connection callback."""
     print(f"Blynk connected (ping: {ping} ms)")
-    blynk.virtual_write(BLYNK_PINS['state'], 1)
+    device_on()
 
 
 @blynk.on('disconnected')
 def blynk_disconnected():
     """Disconnection callback."""
     print(f"Blynk disconnected")
+
+
+def device_on():
+    blynk.virtual_write(BLYNK_PINS['led_green'], 1)
+    blynk.virtual_write(BLYNK_PINS['led_red'], 0)
+
+
+def device_off():
+    blynk.virtual_write(BLYNK_PINS['led_green'], 0)
+    blynk.virtual_write(BLYNK_PINS['led_red'], 1)
 
 
 def read_temperature() -> float:
@@ -76,5 +87,5 @@ while True:
         blynk.run()
         timer.run()
     except KeyboardInterrupt:
-        blynk.virtual_write(BLYNK_PINS['state'], 0)
+        device_off()
         sys.exit(0)
