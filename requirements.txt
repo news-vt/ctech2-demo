@@ -1,3 +1,5 @@
 # blynk-library-python
 git+https://github.com/vshymanskyy/blynk-library-python@master#egg=blynk-library-python
 pyyaml
+tflite-runtime
+opencv-python
