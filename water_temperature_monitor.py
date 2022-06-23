@@ -104,12 +104,30 @@ def read_temperature(device: Path) -> tuple[float, float]:
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return temp_c, temp_f
 
+water_boiling = False
+
 def blynk_set_temperature_value():
+    global water_boiling
     update_time = datetime.now()
     temperature_value = read_temperature(device_file)
     blynk.virtual_write(BLYNK_PINS['temperature'], temperature_value[0])
     blynk.virtual_write(BLYNK_PINS['time'], f"{update_time}")
     print(f"Temperature Update: {temperature_value[0]} ºC / {temperature_value[1]} ºF ({update_time})")
+
+    threshold_boil = 95
+    if not water_boiling and temperature_value[0] > threshold_boil:
+        water_boiling = True
+        event = 'water_boiling'
+        msg = f"Water is boiling: {temperature_value[0]} ºC / {temperature_value[1]} ºF"
+        blynk.log_event(event, msg)
+        print(f"[{event}] {msg}")
+
+    elif water_boiling and temperature_value[0] <= threshold_boil:
+        water_boiling = False
+        event = 'water_cooled'
+        msg = f"Water has cooled: {temperature_value[0]} ºC / {temperature_value[1]} ºF"
+        blynk.log_event(event, msg)
+        print(f"[{event}] {msg}")
 
 
 # Add Timers
