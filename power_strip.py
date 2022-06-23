@@ -6,6 +6,25 @@ import sys
 import yaml
 from datetime import datetime
 import random
+import RPi.GPIO as gpio
+
+
+# Dictionary of Blynk virtual pin numbers.
+BLYNK_PINS = {
+    'led_green': 0,
+    'led_red': 1,
+    'switch': 2,
+    'time': 3,
+}
+
+GPIO_PINS = {
+    'switch': 2, # GPIO 2, Pin 3
+}
+
+# Setup GPIO pins.
+gpio.setmode(gpio.BCM)
+for key, val in GPIO_PINS.items():
+    gpio.setup(val, gpio.OUT)
 
 
 def eprint(*args, **kwargs):
@@ -34,14 +53,6 @@ blynk = bl.Blynk(
 # Create BlynkTimer Instance
 timer = bt.BlynkTimer()
 
-# Dictionary of Blynk virtual pin numbers.
-BLYNK_PINS = {
-    'led_green': 0,
-    'led_red': 1,
-    'switch': 2,
-    'time': 3,
-}
-
 
 @blynk.on('connected')
 def blynk_connected(ping: float):
@@ -60,11 +71,13 @@ def blynk_disconnected():
 
 
 def device_on():
+    gpio.output(GPIO_PINS['switch'], gpio.HIGH)
     blynk.virtual_write(BLYNK_PINS['led_green'], 1)
     blynk.virtual_write(BLYNK_PINS['led_red'], 0)
 
 
 def device_off():
+    gpio.output(GPIO_PINS['switch'], gpio.LOW)
     blynk.virtual_write(BLYNK_PINS['led_green'], 0)
     blynk.virtual_write(BLYNK_PINS['led_red'], 1)
 
@@ -96,4 +109,5 @@ while True:
         blynk.run()
         timer.run()
     except KeyboardInterrupt:
+        gpio.cleanup()
         sys.exit(0)
