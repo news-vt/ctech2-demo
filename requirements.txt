@@ -3,5 +3,3 @@ git+https://github.com/vshymanskyy/blynk-library-python@master#egg=blynk-library
 pyyaml
 tflite-runtime
 opencv-python
-gpiozero
-pigpio

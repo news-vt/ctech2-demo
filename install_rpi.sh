@@ -4,4 +4,4 @@ sudo apt -y install qt4-dev-tools libatlas-base-dev libhdf5-103
 
 sudo apt -y install at-spi2-core
 
-sudo apt -y install pigpio
+sudo apt -y install python3-rpi.gpio
