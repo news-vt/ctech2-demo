@@ -1,6 +1,18 @@
 # ctech2-demo
 Demo materials for C-Tech^2 summer camp.
 
+## Blynk.io Setup
+
+1. First create an account with [Blynk.io](https://blynk.cloud/). 
+2. Create **templates** and **devices** for the `water temperature sensor`, and the `power strip`. 
+3. Copy/paste the configuration code for each device into a YAML file with the same name as the Python file you are trying to run. For example, for the power strip you will create a file `power_strip.yml` that looks sort of like this:
+    ```yaml
+    BLYNK_TEMPLATE_ID: "<some id>"
+    BLYNK_DEVICE_NAME: "<some name>"
+    BLYNK_AUTH_TOKEN: "<some auth token"
+    ```
+4. Modify the Blynk **virtual pin** and **physical GPIO pin** assignments to match those of your Raspberry Pi and Blynk device online.
+
 ## Quickstart Guide
 
 ### Pi Camera Demo
