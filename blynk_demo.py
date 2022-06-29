@@ -1,5 +1,7 @@
 """This code is the simplest example of using Blynk with Python.
 
+Note that you do not need any Raspberry Pis or Arduinos for this code. All you need is a laptop. :)
+
 To use it, you first need to go to <https://blynk.cloud> and create a template and device.
 Once you do those 2 things, come back here and paste the `BLYNK_AUTH_TOKEN` and `BLYNK_TEMPLATE_ID`
 values into the variables below.
